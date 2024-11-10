@@ -1,0 +1,50 @@
+TX code:
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(6, 7); // RX, TX
+void setup()
+{
+  Serial.begin(9600);
+  while (!Serial) {
+  }
+  Serial.println("hello");
+  mySerial.begin(9600);
+  mySerial.println("Hello, world?");
+}
+void loop()
+{
+  if (mySerial.available())
+    Serial.write(mySerial.read());
+  if (Serial.available())
+    mySerial.write(Serial.read());
+}
+
+RX code:
+#include <SoftwareSerial.h>
+#define rxPin 6
+#define txPin 7
+// Set up a new SoftwareSerial object
+SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin)
+void setup()  {
+   Serial.begin(9600);
+      // Set the baud rate for the SoftwareSerial object
+    mySerial.begin(9600);
+}
+void loop() {
+  unsigned int temp = analogRead(A0);
+  temp = map(temp,0,1023,0,500);    //10mV = 1'C
+  
+  mySerial.println("HELLO STUDENTS");
+  delay(1000);
+}
+ 
+
+
+
+ 
+
+
+
+
+
+ 
+

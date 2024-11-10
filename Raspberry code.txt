@@ -1,0 +1,156 @@
+﻿LED
+
+
+import time
+from gpiozero import LED
+ led1 = LED (8)
+ led2 = LED (9)
+ led3 = LED (10)
+ led4 = LED (11)
+while True:
+ try:
+
+
+led1.off()
+time.sleep(0.1)
+led1.on()
+led2.off() 
+time.sleep(0.1)
+led2.on()
+led3.off()
+time.sleep(0.1)
+led3.on()
+led4.off()
+time.sleep(0.1)
+led4.on()
+except KeyboardInterrupt:
+print("closing")
+exit()
+
+
+
+
+Relay 
+
+
+import time
+import RP1.GPIO as GPIO
+TRUE = 1
+relay1 = 12
+relay2 = 4
+GPIO.setmode (GPIO.BCM)
+GPIO.setup(relay1, GPIO.OUT)
+GPIO.setup(relay2, GPIO.OUT)
+
+
+def relayState(relay,val):
+ if relay == 1:
+GPIO.output(relay1,val)
+ if relay == 2:
+GPIO.output(relay2,val)
+
+
+try:
+while TRUE:
+
+
+relayState(1,1)
+time.sleep(0.5)
+relayState(1,0) 
+time.sleep(0.5)
+relayState(2,1)
+time.sleep(0.5)
+relayState(2,0)
+time.sleep(0.5)
+
+
+except KeyboardInterrupt:
+RUNNING = False
+print ("\Quitting")
+finally:
+
+
+
+
+BUZZER 
+
+
+import time
+import RPi.GPIO as GPIO
+
+
+TRUE = 1
+buzzer = 4
+
+
+GPIO.setmode (GPIO.BCM)
+GPIO.setup(buzzer, GPIO.OUT)
+
+
+def buzzerState(val):
+GPIO.output (buzzer,val)
+
+
+try:
+while TRUE:
+buzzerState(1)
+time.sleep(1)
+buzzerState(0) 
+time.sleep(1)
+
+
+except KeyboardInterrupt:
+RUNNING = False
+print ("\Quitting")
+finally:
+
+
+
+
+ULTRASONIC SENSOR
+
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode (GPIO.BCM)
+
+
+GPIO TRIGGER = 27 
+GPIO ECHO = 18
+
+
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
+def distance():
+
+
+GPIO.output(GPIO_TRIGGER, True)
+time.sleep(0.00001) 
+GPIO.output (GPIO TRIGGER, False)
+
+
+StartTime = time.time()
+StopTime = time.time()
+
+
+while GPIO.input(GPIO_ECHO) == 0:
+StartTime = time.time()
+while GPIO.input(GPIO_ECHO) == 1: StopTime = time.time()
+
+
+TimeElapsed = StopTime - StartTime
+distance = (TimeElapsed* 34300) / 2
+return distance
+
+
+if __name__ == ‘__main__’:
+try:
+while True:
+dist = distance()
+print ("Measured Distance = %.lf cm" %dist)
+time.sleep(1)
+
+
+except Keyboard Interrupt:
+print("Measurement stopped by User")
+GPIO.cleanup()
